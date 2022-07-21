@@ -39,7 +39,7 @@ if (process.env.ENV === 'local') {
     const handler = serverless(app, {
       binary: binaryMimeTypes,
     });
-    module.exports.lambda = async (context, req) => {
+    module.exports.handler = async (context, req) => {
       const googleSheetsClientSecret = await fetchJSONSecret('google-sheets-client-secret');
       console.log('googleSheetsClientSecret', googleSheetsClientSecret);
       const googleSheetID = await fetchJSONSecret('google-sheet-id').then((jsonSecret) => jsonSecret.value);
