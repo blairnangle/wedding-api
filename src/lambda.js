@@ -35,13 +35,17 @@ if (process.env.ENV === 'local') {
     console.log(`app listening on port ${portNumber}`);
   });
 } else {
-  module.exports.handler = async () => {
-    const googleSheetsClientSecret = await fetchJSONSecret('google-sheets-client-secret');
-    const googleSheetID = await fetchJSONSecret('google-sheet-id').then((jsonSecret) => jsonSecret.value);
-    app.set('googleSheetsClientSecret', googleSheetsClientSecret);
-    app.set('googleSheetID', googleSheetID);
-    serverless(app, {
-      binary: binaryMimeTypes,
-    });
-  };
+  try {
+    module.exports.handler = async () => {
+      const googleSheetsClientSecret = await fetchJSONSecret('google-sheets-client-secret');
+      const googleSheetID = await fetchJSONSecret('google-sheet-id').then((jsonSecret) => jsonSecret.value);
+      app.set('googleSheetsClientSecret', googleSheetsClientSecret);
+      app.set('googleSheetID', googleSheetID);
+      serverless(app, {
+        binary: binaryMimeTypes,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
 }

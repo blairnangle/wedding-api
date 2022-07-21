@@ -21,14 +21,18 @@ curl -X POST -v http://localhost:8083/ -H 'Content-Type: application/json' -H 'A
 Send some data to the API to write to the spreadsheet. E.g.:
 
 ```shell
-curl -X POST -v https://7lo8o3fj9b.execute-api.eu-west-2.amazonaws.com/rsvp/ -H 'Content-Type: application/json' -H 'Accept: application/json' -d @example-payload.json
+curl -X POST -v https://<lambad-fn-id>.execute-api.<region>.amazonaws.com/rsvp/ -H 'Content-Type: application/json' -H 'Accept: application/json' -d @example-payload.json
 ```
 
 ## Mechanism
 
-### Infra/deployments
+### Infra
 
-- Docker image is built and uploaded to AWS Elastic Container Registry (ECR)
+- Create AWS Lambda, API Gateway and Elastic Container Registry (ECR) resources
+
+### Deployments
+
+- Docker image is built and uploaded to ECR
 - Dockerized Lambda is updated to use the latest image
 
 ### App start
@@ -72,3 +76,4 @@ aws secretsmanager create-secret --name google-sheet-id --secret-string file://g
   - Lambda needs credentials to authenticate
 - Handle local versus prod
 - How to trigger API Gateway redeployment after updating
+- How to pass region and name of Sheet tab as vars to app
