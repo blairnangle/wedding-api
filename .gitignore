@@ -8,3 +8,9 @@ node_modules
 .terraform
 *.tfstate
 *.tfstate.backup
+
+# Client secret for the Google Sheets API, stored locally for convenience when testing app locally
+google-sheets-client-secret.json
+
+# Google Sheet ID, stored locally for convenience when testing app locally
+google-sheet-id.json
