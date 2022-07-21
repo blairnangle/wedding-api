@@ -36,16 +36,17 @@ if (process.env.ENV === 'local') {
   });
 } else {
   try {
-    module.exports.handler = async () => {
-      const googleSheetsClientSecret = await fetchJSONSecret('google-sheets-client-secret');
-      console.log('googleSheetsClientSecret', googleSheetsClientSecret);
-      const googleSheetID = await fetchJSONSecret('google-sheet-id').then((jsonSecret) => jsonSecret.value);
-      console.log('googleSheetsClientSecret', googleSheetsClientSecret);
-      app.set('googleSheetsClientSecret', googleSheetsClientSecret);
-      app.set('googleSheetID', googleSheetID);
-      serverless(app, {
-        binary: binaryMimeTypes,
-      });
+    const googleSheetsClientSecret = await fetchJSONSecret('google-sheets-client-secret');
+    console.log('googleSheetsClientSecret', googleSheetsClientSecret);
+    const googleSheetID = await fetchJSONSecret('google-sheet-id').then((jsonSecret) => jsonSecret.value);
+    console.log('googleSheetsClientSecret', googleSheetsClientSecret);
+    app.set('googleSheetsClientSecret', googleSheetsClientSecret);
+    app.set('googleSheetID', googleSheetID);
+    const handler = serverless(app, {
+      binary: binaryMimeTypes,
+    });
+    module.exports.lambda = async (context, req) => {
+      context.res = await handler(context, req);
     }
   } catch (error) {
     console.log(error);
