@@ -8,6 +8,7 @@ node_modules
 .terraform
 *.tfstate
 *.tfstate.backup
+.terraform.lock.hcl
 
 # Client secret for the Google Sheets API, stored locally for convenience when testing app locally
 google-sheets-client-secret.json
